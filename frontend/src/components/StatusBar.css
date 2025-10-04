@@ -1,0 +1,250 @@
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.status-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.status-indicator.online .status-dot {
+  background: #27ae60;
+  box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7);
+  animation: pulse-green 2s infinite;
+}
+
+.status-indicator.loading .status-dot {
+  background: #f39c12;
+  box-shadow: 0 0 0 0 rgba(243, 156, 18, 0.7);
+  animation: pulse-orange 1s infinite;
+}
+
+.status-indicator.error .status-dot {
+  background: #e74c3c;
+  box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7);
+  animation: pulse-red 2s infinite;
+}
+
+.status-indicator.offline .status-dot {
+  background: #95a5a6;
+}
+
+@keyframes pulse-green {
+  0% {
+    box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(39, 174, 96, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(39, 174, 96, 0);
+  }
+}
+
+@keyframes pulse-orange {
+  0% {
+    box-shadow: 0 0 0 0 rgba(243, 156, 18, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(243, 156, 18, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(243, 156, 18, 0);
+  }
+}
+
+@keyframes pulse-red {
+  0% {
+    box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(231, 76, 60, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
+  }
+}
+
+.status-text {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.status-indicator.online .status-text {
+  color: #27ae60;
+}
+
+.status-indicator.loading .status-text {
+  color: #f39c12;
+}
+
+.status-indicator.error .status-text {
+  color: #e74c3c;
+}
+
+.status-indicator.offline .status-text {
+  color: #95a5a6;
+}
+
+.last-updated {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.update-label {
+  font-weight: 500;
+}
+
+.update-time {
+  font-weight: 600;
+  color: #495057;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid rgba(231, 76, 60, 0.2);
+}
+
+.error-icon {
+  font-size: 1rem;
+}
+
+.error-text {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status-actions {
+  display: flex;
+  align-items: center;
+}
+
+.refresh-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+}
+
+.refresh-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+}
+
+.refresh-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.refresh-btn.loading .refresh-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.refresh-icon {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.refresh-text {
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .status-bar {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  
+  .status-info {
+    justify-content: space-between;
+    gap: 12px;
+  }
+  
+  .error-message {
+    order: -1;
+  }
+  
+  .error-text {
+    max-width: none;
+  }
+  
+  .status-actions {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .status-bar {
+    padding: 12px 16px;
+  }
+  
+  .status-info {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .last-updated {
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+  }
+}
