@@ -1,3 +1,7 @@
+# Netlify Configuration for Gold & Silver Dashboard Frontend
+# Note: Backend components (Express, Playwright, SQLite, Cron) cannot run on Netlify
+# See NETLIFY_ALTERNATIVES.md for deployment options
+
 [build]
   base = "frontend"
   publish = "frontend/build"
@@ -5,21 +9,61 @@
 
 [build.environment]
   NODE_VERSION = "18"
+  # Frontend will use demo data if backend is unavailable
+  REACT_APP_FALLBACK_MODE = "true"
 
+# Redirect API calls to external backend service
+# Update this URL with your deployed backend (Railway, Heroku, etc.)
 [[redirects]]
   from = "/api/*"
-  to = "https://your-backend-api.herokuapp.com/api/:splat"
+  to = "https://your-backend-api.railway.app/api/:splat"
   status = 200
+  force = false
+  # Add headers for CORS if needed
+  [redirects.headers]
+    Access-Control-Allow-Origin = "*"
 
+# SPA fallback for React Router
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
+# Development settings
 [dev]
   command = "npm start"
   port = 3000
   publish = "frontend/build"
 
+# Production environment variables
+[build.environment]
+  REACT_APP_API_BASE_URL = "https://your-backend-api.railway.app"
+  GENERATE_SOURCEMAP = "false"
+  
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Functions directory (if converting to serverless functions later)
+[functions]
+  directory = "netlify/functions"
+
+# Form handling (if adding contact forms later)
 [template.environment]
-  REACT_APP_API_BASE_URL = "Production API URL will be set here"
+  REACT_APP_API_BASE_URL = "https://your-backend-api.railway.app"
+  REACT_APP_ENVIRONMENT = "production"
