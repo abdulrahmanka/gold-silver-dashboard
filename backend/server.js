@@ -13,8 +13,18 @@ const scheduler = new DataScheduler();
 // Middleware
 app.use(cors({
     origin: process.env.NODE_ENV === 'production' 
-        ? ['https://your-domain.com'] 
-        : ['http://localhost:3000', 'http://127.0.0.1:3000']
+        ? [
+            'https://gold-silver-dashboard.netlify.app',
+            'https://gold-silver-dashboard.vercel.app',
+            /\.netlify\.app$/,
+            /\.vercel\.app$/
+          ] 
+        : [
+            'http://localhost:3000', 
+            'http://127.0.0.1:3000',
+            /\.ngrok-free\.app$/,
+            /\.ngrok\.io$/
+          ]
 }));
 app.use(express.json());
 

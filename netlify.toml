@@ -1,0 +1,25 @@
+[build]
+  base = "frontend"
+  publish = "frontend/build"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://your-backend-api.herokuapp.com/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[dev]
+  command = "npm start"
+  port = 3000
+  publish = "frontend/build"
+
+[template.environment]
+  REACT_APP_API_BASE_URL = "Production API URL will be set here"
